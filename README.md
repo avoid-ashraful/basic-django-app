@@ -15,7 +15,7 @@ A minimal Django + Django REST Framework project template with JWT auth, pytest 
 
 ```
 config/          project settings and root urls
-users/           custom User model, JWT token endpoints, UserFactory
+users/           custom User model, JWT token endpoints, user CRUD API, UserFactory
 common/          sample app: Sample model, ModelViewSet, SampleFactory
 conftest.py      shared pytest fixtures (api_client, authed_api_client)
 ```
@@ -35,13 +35,17 @@ The Django admin is at `/admin/`, with `User` and `Sample` registered. Log in wi
 ## API
 
 All API routes are versioned under `/api/v1/`. Every endpoint requires a JWT
-unless it opts in with `permission_classes = [AllowAny]`.
+unless it opts in with `permission_classes = [AllowAny]`. Tokens carry a hash of the
+user's password, so changing the password revokes every previously issued token.
 
 | Method | Path | Description |
 | --- | --- | --- |
 | POST | `/api/v1/auth/token/` | Obtain access + refresh tokens (`username`, `password`) |
 | POST | `/api/v1/auth/token/refresh/` | Get a new access token (`refresh`) |
 | POST | `/api/v1/auth/token/verify/` | Verify a token (`token`) |
+| POST | `/api/v1/users/` | Sign up (no token needed) |
+| GET, PUT, PATCH, DELETE | `/api/v1/users/` | Read / update / delete your own profile (`email` is read-only); never a list |
+| POST | `/api/v1/users/change-password/` | Change password (`current_password`, `new_password`); revokes old tokens and returns new ones |
 | GET, POST | `/api/v1/common/samples/` | List / create samples |
 | GET, PUT, PATCH, DELETE | `/api/v1/common/samples/<id>/` | Retrieve / update / delete a sample |
 

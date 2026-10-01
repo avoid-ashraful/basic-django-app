@@ -29,4 +29,5 @@ class Sample(TimeStampedModel):
         ordering = ["-created"]
 
     def __str__(self):
+        """Return the sample's name as its display value."""
         return self.name

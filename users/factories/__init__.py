@@ -17,5 +17,6 @@ class UserFactory(factory.django.DjangoModelFactory):
 
     @factory.post_generation
     def save_password(self, create, extracted, **kwargs):
+        """Persist the password hashed by the set_password post-generation call."""
         if create:
             self.save(update_fields=["password"])

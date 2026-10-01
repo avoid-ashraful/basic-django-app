@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 
 v1_urls = [
-    path("auth/", include("users.urls")),
+    path("", include("users.urls")),
     path("common/", include("common.urls")),
 ]
 

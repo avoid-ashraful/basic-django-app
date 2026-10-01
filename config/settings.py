@@ -112,4 +112,7 @@ SIMPLE_JWT = {
     "SIGNING_KEY": env("JWT_SECRET_KEY", default=SECRET_KEY),
     "ALGORITHM": "HS256",
     "AUTH_HEADER_TYPES": ("Bearer",),
+    # Tokens carry a hash of the password; changing it revokes every old token.
+    "CHECK_REVOKE_TOKEN": True,
+    "TOKEN_REFRESH_SERIALIZER": "users.api.serializers.RevocableTokenRefreshSerializer",
 }

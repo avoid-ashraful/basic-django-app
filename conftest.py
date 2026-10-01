@@ -17,12 +17,16 @@ def api_client():
 
 @pytest.fixture
 def anon_api_client(api_client):
+    """An unauthenticated DRF api test client."""
     return api_client
 
 
 @pytest.fixture
 def authed_api_client(api_client):
+    """Return a factory that authenticates the api client as a given user."""
+
     def _api_client_authenticator(user):
+        """Attach the user's JWT to the api client and return it."""
         api_client.credentials(HTTP_AUTHORIZATION="Bearer " + user.jwt)
         return api_client
 
