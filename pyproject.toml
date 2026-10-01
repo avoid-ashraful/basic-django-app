@@ -1,0 +1,51 @@
+[project]
+name = "basic-app"
+version = "0.1.0"
+requires-python = "~=3.14.0"
+dependencies = [
+    "Django==6.1.1",
+    "django-environ==0.14.0",
+    "djangorestframework==3.18.1",
+    "djangorestframework-simplejwt==5.5.1",
+]
+
+[dependency-groups]
+lint = [
+    "black==26.5.1",
+    "flake8==7.4.1",
+    "flake8-bugbear==26.9.30",
+    "isort==9.0.2",
+    "pre-commit==4.6.2",
+]
+dev = [
+    "djangorestframework-stubs==3.18.1",
+    "factory-boy==3.3.3",
+    "faker==40.40.0",
+    "pytest==9.1.1",
+    "pytest-cov==7.1.0",
+    "pytest-django==4.14.0",
+    {include-group = "lint"},
+]
+
+[tool.uv]
+package = false
+default-groups = ["dev"]
+
+[tool.black]
+line-length = 90
+target-version = ["py314"]
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+    \.venv
+  | migrations
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 90
+known_first_party = ["config", "users", "common"]
+# Keeps isort correct even when the repo is cloned into a folder named "django".
+known_third_party = ["django"]
+skip_glob = ["*/migrations/*", ".venv/*"]
