@@ -4,6 +4,7 @@ from django.urls import include, path, re_path
 v1_urls = [
     path("", include("users.urls")),
     path("common/", include("common.urls")),
+    path("temp/", include("temp.urls")),
 ]
 
 urlpatterns = [
