@@ -27,7 +27,8 @@ class TestProductViewSet:
         client = authed_api_client(self.user)
         tags = TagFactory.create_batch(size=num_tags)
         response = client.post(
-            self.list_url, {"name": "Test 1", "description": "Test 1", "tags": [tag.id for tag in tags]}
+            self.list_url,
+            {"name": "Test 1", "description": "Test 1", "tags": [tag.id for tag in tags]},
         )
         if num_tags in (1, 2):
             assert response.status_code == status.HTTP_201_CREATED

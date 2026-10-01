@@ -19,7 +19,9 @@ class TagSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     """Serializer class for Product model"""
 
-    tags = serializers.PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all(), required=False)
+    tags = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=Tag.objects.all(), required=False
+    )
 
     class Meta:
         model = Product
@@ -28,7 +30,12 @@ class ProductSerializer(serializers.ModelSerializer):
             "name",
             "description",
             "tags",
+            "sku",
+            "stock",
+            "view_count",
+            "version",
         ]
+        read_only_fields = ["view_count", "version"]
 
     def to_representation(self, instance):
         """Return tags as full objects instead of ids."""
